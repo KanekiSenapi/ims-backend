@@ -14,8 +14,6 @@ import java.util.UUID;
 public class CustomerDetailsResponse {
     private UUID id;
     private String name;
-    private String krs;
     private String nip;
-    private String regon;
     private String address;
 }

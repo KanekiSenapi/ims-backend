@@ -6,23 +6,33 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
+
 public interface BaseCrudController<UpsertRequest, DetailsResponse, BasicResponse> {
 
-    @PostMapping
+    @PostMapping(
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
     @Operation(
             summary = "Create a new resource",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Resource created", content = @Content(schema = @Schema(implementation = Object.class)))
             }
     )
-    DetailsResponse create(@RequestBody final UpsertRequest dto);
+    @ResponseBody
+    DetailsResponse create(@Valid @RequestBody final UpsertRequest dto);
 
-    @GetMapping(path = "{id}")
+    @GetMapping(
+            path = "{id}",
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
     @Operation(
             summary = "Get a resource by ID",
             responses = {
@@ -32,7 +42,9 @@ public interface BaseCrudController<UpsertRequest, DetailsResponse, BasicRespons
     )
     DetailsResponse getById(@PathVariable @Parameter(description = "Resource ID") final UUID id);
 
-    @GetMapping
+    @GetMapping(
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
     @Operation(
             summary = "Get all resources",
             responses = {
@@ -41,7 +53,11 @@ public interface BaseCrudController<UpsertRequest, DetailsResponse, BasicRespons
     )
     List<BasicResponse> getAll();
 
-    @PutMapping(path = "{id}")
+    @PutMapping(
+            path = "{id}",
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
     @Operation(
             summary = "Update a resource by ID",
             responses = {
@@ -49,9 +65,12 @@ public interface BaseCrudController<UpsertRequest, DetailsResponse, BasicRespons
                     @ApiResponse(responseCode = "404", description = "Resource not found")
             }
     )
-    DetailsResponse update(@PathVariable @Parameter(description = "Resource ID") final UUID id, @RequestBody final UpsertRequest dto);
+    DetailsResponse update(@PathVariable @Parameter(description = "Resource ID") final UUID id, @Valid @RequestBody final UpsertRequest dto);
 
-    @DeleteMapping(path = "{id}")
+    @DeleteMapping(
+            path = "{id}",
+            consumes = {MediaType.APPLICATION_JSON_VALUE}
+    )
     @Operation(
             summary = "Delete a resource by ID",
             responses = {

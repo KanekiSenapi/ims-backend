@@ -26,13 +26,7 @@ public class CustomerEntity {
     private String name;
 
     @Column(nullable = false, unique = true)
-    private String krs;
-
-    @Column(nullable = false, unique = true)
     private String nip;
-
-    @Column(nullable = false, unique = true)
-    private String regon;
 
     @Column(nullable = false)
     private String address;

@@ -17,9 +17,7 @@ public class CustomerConverter extends BaseConverter<CustomerEntity, CustomerUps
         return CustomerEntity.builder()
                 .id(id)
                 .name(request.getName())
-                .krs(request.getKrs())
                 .nip(request.getNip())
-                .regon(request.getRegon())
                 .address(request.getAddress())
                 .build();
     }
@@ -29,9 +27,7 @@ public class CustomerConverter extends BaseConverter<CustomerEntity, CustomerUps
         return CustomerDetailsResponse.builder()
                 .id(customerEntity.getId())
                 .name(customerEntity.getName())
-                .krs(customerEntity.getKrs())
                 .nip(customerEntity.getNip())
-                .regon(customerEntity.getRegon())
                 .address(customerEntity.getAddress())
                 .build();
     }
