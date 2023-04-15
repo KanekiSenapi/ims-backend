@@ -11,8 +11,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public abstract class BaseCrudService<ENTITY, DTO> {
 
-    protected JpaRepository<ENTITY, UUID> repository;
-    protected BaseConverter<ENTITY, DTO> converter;
+    protected final JpaRepository<ENTITY, UUID> repository;
+    protected final BaseConverter<ENTITY, DTO> converter;
 
     public List<DTO> findAll() {
         return repository.findAll().stream()
