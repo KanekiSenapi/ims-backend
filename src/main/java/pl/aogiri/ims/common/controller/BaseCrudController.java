@@ -6,14 +6,12 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
-@Tag(name = "Base CRUD Operations")
-public interface BaseCrudController<DTO> {
+public interface BaseCrudController<UpsertRequest, DetailsResponse, BasicResponse> {
 
     @PostMapping
     @Operation(
@@ -22,7 +20,7 @@ public interface BaseCrudController<DTO> {
                     @ApiResponse(responseCode = "201", description = "Resource created", content = @Content(schema = @Schema(implementation = Object.class)))
             }
     )
-    DTO create(@RequestBody final DTO dto);
+    DetailsResponse create(@RequestBody final UpsertRequest dto);
 
     @GetMapping(path = "{id}")
     @Operation(
@@ -32,7 +30,7 @@ public interface BaseCrudController<DTO> {
                     @ApiResponse(responseCode = "404", description = "Resource not found")
             }
     )
-    DTO getById(@PathVariable @Parameter(description = "Resource ID") final UUID id);
+    DetailsResponse getById(@PathVariable @Parameter(description = "Resource ID") final UUID id);
 
     @GetMapping
     @Operation(
@@ -41,7 +39,7 @@ public interface BaseCrudController<DTO> {
                     @ApiResponse(responseCode = "200", description = "Resources found", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Object.class))))
             }
     )
-    List<DTO> getAll();
+    List<BasicResponse> getAll();
 
     @PutMapping(path = "{id}")
     @Operation(
@@ -51,7 +49,7 @@ public interface BaseCrudController<DTO> {
                     @ApiResponse(responseCode = "404", description = "Resource not found")
             }
     )
-    DTO update(@PathVariable @Parameter(description = "Resource ID") final UUID id, @RequestBody final DTO dto);
+    DetailsResponse update(@PathVariable @Parameter(description = "Resource ID") final UUID id, @RequestBody final UpsertRequest dto);
 
     @DeleteMapping(path = "{id}")
     @Operation(

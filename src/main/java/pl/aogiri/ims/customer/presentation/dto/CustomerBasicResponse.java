@@ -11,11 +11,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerDTO {
+public class CustomerBasicResponse {
     private UUID id;
     private String name;
-    private String krs;
-    private String nip;
-    private String regon;
-    private String address;
 }

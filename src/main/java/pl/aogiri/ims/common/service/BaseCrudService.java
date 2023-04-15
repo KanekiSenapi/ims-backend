@@ -9,32 +9,32 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
-public abstract class BaseCrudService<ENTITY, DTO> {
+public abstract class BaseCrudService<Entity, UpsertRequest, DetailsResponse, BasicResponse> {
 
-    protected final JpaRepository<ENTITY, UUID> repository;
-    protected final BaseConverter<ENTITY, DTO> converter;
+    protected final JpaRepository<Entity, UUID> repository;
+    protected final BaseConverter<Entity, UpsertRequest, DetailsResponse, BasicResponse> converter;
 
-    public List<DTO> findAll() {
+    public List<BasicResponse> findAll() {
         return repository.findAll().stream()
-                .map(converter::toDto)
+                .map(converter::toBasicResponse)
                 .toList();
     }
 
-    public Optional<DTO> findById(final UUID id) {
+    public Optional<DetailsResponse> findById(final UUID id) {
         return repository.findById(id)
-                .map(converter::toDto);
+                .map(converter::toDetailsResponse);
     }
 
-    public DTO create(final DTO dto) {
-        ENTITY entity = converter.toEntity(dto);
-        ENTITY savedEntity = repository.save(entity);
-        return converter.toDto(savedEntity);
+    public DetailsResponse create(final UpsertRequest dto) {
+        Entity entity = converter.toEntity(dto);
+        Entity savedEntity = repository.save(entity);
+        return converter.toDetailsResponse(savedEntity);
     }
 
-    public DTO update(final DTO dto) {
-        ENTITY entity = converter.toEntity(dto);
-        ENTITY savedEntity = repository.save(entity);
-        return converter.toDto(savedEntity);
+    public DetailsResponse update(final UUID id, final UpsertRequest dto) {
+        Entity entity = converter.toEntity(dto, id);
+        Entity savedEntity = repository.save(entity);
+        return converter.toDetailsResponse(savedEntity);
     }
 
     public void deleteById(final UUID id) {

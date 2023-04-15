@@ -3,13 +3,30 @@ package pl.aogiri.ims.customer.domain.converter;
 import org.springframework.stereotype.Component;
 import pl.aogiri.ims.common.converter.BaseConverter;
 import pl.aogiri.ims.customer.domain.entity.CustomerEntity;
-import pl.aogiri.ims.customer.presentation.dto.CustomerDTO;
+import pl.aogiri.ims.customer.presentation.dto.CustomerBasicResponse;
+import pl.aogiri.ims.customer.presentation.dto.CustomerDetailsResponse;
+import pl.aogiri.ims.customer.presentation.dto.CustomerUpsertRequest;
+
+import java.util.UUID;
 
 @Component
-public class CustomerConverter extends BaseConverter<CustomerEntity,  CustomerDTO> {
+public class CustomerConverter extends BaseConverter<CustomerEntity, CustomerUpsertRequest, CustomerDetailsResponse, CustomerBasicResponse> {
 
-    public CustomerDTO toDto(CustomerEntity customerEntity) {
-        return CustomerDTO.builder()
+    @Override
+    public CustomerEntity toEntity(final CustomerUpsertRequest request, final UUID id) {
+        return CustomerEntity.builder()
+                .id(id)
+                .name(request.getName())
+                .krs(request.getKrs())
+                .nip(request.getNip())
+                .regon(request.getRegon())
+                .address(request.getAddress())
+                .build();
+    }
+
+    @Override
+    public CustomerDetailsResponse toDetailsResponse(final CustomerEntity customerEntity) {
+        return CustomerDetailsResponse.builder()
                 .id(customerEntity.getId())
                 .name(customerEntity.getName())
                 .krs(customerEntity.getKrs())
@@ -19,14 +36,11 @@ public class CustomerConverter extends BaseConverter<CustomerEntity,  CustomerDT
                 .build();
     }
 
-    public CustomerEntity toEntity(CustomerDTO customerDto) {
-        return CustomerEntity.builder()
-                .id(customerDto.getId())
-                .name(customerDto.getName())
-                .krs(customerDto.getKrs())
-                .nip(customerDto.getNip())
-                .regon(customerDto.getRegon())
-                .address(customerDto.getAddress())
+    @Override
+    public CustomerBasicResponse toBasicResponse(final CustomerEntity customerEntity) {
+        return CustomerBasicResponse.builder()
+                .id(customerEntity.getId())
+                .name(customerEntity.getName())
                 .build();
     }
 }
