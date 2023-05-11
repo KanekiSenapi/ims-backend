@@ -6,7 +6,9 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-public interface BaseCrudController<UpsertRequest, DetailsResponse, BasicResponse> {
+public interface BaseCrudController<UpsertRequest, DetailsResponse, BasicResponse, FilterCriteria> {
 
     @PostMapping(
             consumes = {MediaType.APPLICATION_JSON_VALUE},
@@ -27,6 +29,7 @@ public interface BaseCrudController<UpsertRequest, DetailsResponse, BasicRespons
             }
     )
     @ResponseBody
+    @ResponseStatus(HttpStatus.CREATED)
     DetailsResponse create(@Valid @RequestBody final UpsertRequest dto);
 
     @GetMapping(
@@ -51,7 +54,7 @@ public interface BaseCrudController<UpsertRequest, DetailsResponse, BasicRespons
                     @ApiResponse(responseCode = "200", description = "Resources found", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Object.class))))
             }
     )
-    List<BasicResponse> getAll();
+    List<BasicResponse> getAll(@Nullable FilterCriteria filterCriteria);
 
     @PutMapping(
             path = "{id}",

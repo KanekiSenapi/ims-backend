@@ -8,9 +8,10 @@ import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
-public abstract class BaseCrudRestController<Entity, UpsertRequest, DetailsResponse, BasicResponse> implements BaseCrudController<UpsertRequest, DetailsResponse, BasicResponse> {
+public abstract class BaseCrudRestController<Entity, UpsertRequest, DetailsResponse, BasicResponse, FilterCriteria>
+        implements BaseCrudController<UpsertRequest, DetailsResponse, BasicResponse, FilterCriteria> {
 
-    private final BaseCrudService<Entity, UpsertRequest, DetailsResponse, BasicResponse> crudService;
+    protected final BaseCrudService<Entity, UpsertRequest, DetailsResponse, BasicResponse, FilterCriteria> crudService;
 
     @Override
     public DetailsResponse create(final UpsertRequest dto) {
@@ -23,8 +24,8 @@ public abstract class BaseCrudRestController<Entity, UpsertRequest, DetailsRespo
     }
 
     @Override
-    public List<BasicResponse> getAll() {
-        return crudService.findAll();
+    public List<BasicResponse> getAll(final FilterCriteria filterCriteria) {
+        return crudService.find(filterCriteria);
     }
 
     @Override
