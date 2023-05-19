@@ -1,12 +1,13 @@
-package pl.aogiri.ims.invoice.presentation.dto.invoice;
+package pl.aogiri.ims.file.presentation.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.aogiri.ims.file.domain.value.FileType;
 import pl.aogiri.ims.invoice.domain.entity.InvoiceType;
 
-import java.net.URI;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -14,9 +15,10 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class InvoiceUpsertRequest {
+public class FileUploadRequest implements Serializable {
+    private FileType fileType;
+    private UUID invoiceId;
 
-    private URI file;
     private InvoiceType invoiceType;
     private String invoiceNumber;
     private LocalDate invoiceDate;
@@ -26,4 +28,5 @@ public class InvoiceUpsertRequest {
     private UUID sellerId;
     private UUID buyerId;
     private String additionalInfo;
+
 }

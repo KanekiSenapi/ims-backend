@@ -2,12 +2,15 @@ package pl.aogiri.ims.invoice.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.apache.commons.lang3.ObjectUtils;
 import org.hibernate.Hibernate;
+import pl.aogiri.ims.confirmation.domain.entity.ConfirmationEntity;
 import pl.aogiri.ims.customer.domain.entity.CustomerEntity;
 
 import java.math.BigDecimal;
 import java.net.URI;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -26,6 +29,10 @@ public class InvoiceEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "uuid", updatable = false, nullable = false)
     private UUID id;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private InvoiceType invoiceType;
 
     @Column(nullable = false)
     private String invoiceNumber;
@@ -57,10 +64,18 @@ public class InvoiceEntity {
     @ToString.Exclude
     private List<InvoiceItemEntity> items;
 
-    private URI file;
+    @OneToMany(cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<ConfirmationEntity> confirmations;
+
+    private String file;
+
 
     @Transient
     public BigDecimal getTotalGrossAmount() {
+        if (items.isEmpty()) {
+            return BigDecimal.ZERO;
+        }
         return items.stream().map(InvoiceItemEntity::getTotalGrossAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
@@ -75,5 +90,17 @@ public class InvoiceEntity {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    public List<InvoiceItemEntity> getItems() {
+        return ObjectUtils.firstNonNull(items, List.of());
+    }
+
+    public URI getFile() {
+        return URI.create(file);
+    }
+
+    public void setFile(URI uri) {
+        this.file = uri.toString();
     }
 }

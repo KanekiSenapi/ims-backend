@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: ims_pg_local
+    environment:
+      POSTGRES_USER: ims
+      POSTGRES_PASSWORD: ims
+      POSTGRES_DB: ims
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  google-storage-emulator:
+    image: oittaa/gcp-storage-emulator:latest
+    command: "start --port=9000 --in-memory"
+    container_name: ims_gcs_local
+    ports:
+      - "9000:9000"
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: ims_mail_local
+    ports:
+      - "1025:1025"
+      - "8025:8025"

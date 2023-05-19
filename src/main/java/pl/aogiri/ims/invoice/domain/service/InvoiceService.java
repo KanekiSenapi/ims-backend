@@ -1,5 +1,6 @@
 package pl.aogiri.ims.invoice.domain.service;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.aogiri.ims.common.service.BaseCrudService;
@@ -13,6 +14,8 @@ import pl.aogiri.ims.invoice.presentation.dto.invoice.InvoiceDetailsResponse;
 import pl.aogiri.ims.invoice.presentation.dto.InvoiceFilterCriteria;
 import pl.aogiri.ims.invoice.presentation.dto.invoice.InvoiceUpsertRequest;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class InvoiceService extends BaseCrudService<InvoiceEntity, InvoiceUpsertRequest, InvoiceDetailsResponse, InvoiceBasicResponse, InvoiceFilterCriteria> {
@@ -21,4 +24,8 @@ public class InvoiceService extends BaseCrudService<InvoiceEntity, InvoiceUpsert
         super(repository, converter, specifications);
     }
 
+    public List<InvoiceEntity> findRaw(InvoiceFilterCriteria filterCriteria) {
+        Specification<InvoiceEntity> specification = specifications.filterByCriteria(filterCriteria);
+        return repository.findAll(specification);
+    }
 }

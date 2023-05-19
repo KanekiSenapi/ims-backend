@@ -2,7 +2,7 @@ CREATE TABLE products
 (
     id           UUID    NOT NULL,
     name         VARCHAR(255),
-    netUnitPrice DECIMAL NOT NULL,
+    net_unit_price DECIMAL NOT NULL,
     customer_id  UUID    NOT NULL,
     CONSTRAINT pk_products PRIMARY KEY (id)
 );

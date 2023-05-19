@@ -1,6 +1,23 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
+  mail:
+    host: localhost
+    port: 1025
+    test-connection: true
+  jpa:
+    show-sql: true
 
 server:
   port: 8080
+
+ims:
+  owner: TEST_OWNER_IMS
+  accounting:
+    email: ims_accounting_test@ims.com
+
+  gcp:
+    project: ims
+    storage:
+      host: http://localhost:9000
+      bucket: ims_files
