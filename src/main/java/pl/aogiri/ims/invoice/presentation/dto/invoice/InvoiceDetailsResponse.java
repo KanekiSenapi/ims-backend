@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.aogiri.ims.customer.presentation.dto.CustomerBasicResponse;
 import pl.aogiri.ims.customer.presentation.dto.CustomerDetailsResponse;
 import pl.aogiri.ims.invoice.presentation.dto.invoiceitem.InvoiceItemDetailsResponse;
 

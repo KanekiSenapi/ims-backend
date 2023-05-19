@@ -9,8 +9,6 @@ import pl.aogiri.ims.product.presentation.dto.ProductDetailsResponse;
 import pl.aogiri.ims.product.presentation.dto.ProductFilterCriteria;
 import pl.aogiri.ims.product.presentation.dto.ProductUpsertRequest;
 
-import java.util.List;
-
 @RestController
 public class ProductRestController
         extends BaseCrudRestController<ProductEntity, ProductUpsertRequest, ProductDetailsResponse, ProductBasicResponse, ProductFilterCriteria>

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import pl.aogiri.ims.invoice.presentation.dto.invoicefile.InvoiceWithFile;
 import pl.aogiri.ims.report.domain.value.Report;
 
-import java.time.Month;
 import java.time.YearMonth;
 import java.util.List;
 

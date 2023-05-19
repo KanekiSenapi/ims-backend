@@ -1,7 +1,6 @@
 package pl.aogiri.ims.common.provider;
 
 import com.google.cloud.NoCredentials;
-import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BucketInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;

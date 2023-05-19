@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import pl.aogiri.ims.report.common.ReportUtils;
 import pl.aogiri.ims.report.domain.value.Report;
 
-import java.sql.SQLException;
 import java.util.Map;
 
 @RequiredArgsConstructor

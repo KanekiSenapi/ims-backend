@@ -3,11 +3,9 @@ package pl.aogiri.ims.invoice.domain.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
-import pl.aogiri.ims.customer.domain.entity.CustomerEntity;
 import pl.aogiri.ims.product.domain.entity.ProductEntity;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 

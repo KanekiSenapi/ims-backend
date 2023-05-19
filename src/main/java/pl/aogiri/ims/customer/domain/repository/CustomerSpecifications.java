@@ -6,8 +6,6 @@ import org.springframework.stereotype.Component;
 import pl.aogiri.ims.common.repository.BaseSpecifications;
 import pl.aogiri.ims.customer.domain.entity.CustomerEntity;
 import pl.aogiri.ims.customer.presentation.dto.CustomerFilterCriteria;
-import pl.aogiri.ims.product.domain.entity.ProductEntity;
-import pl.aogiri.ims.product.presentation.dto.ProductFilterCriteria;
 
 import java.util.ArrayList;
 import java.util.List;

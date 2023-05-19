@@ -12,8 +12,6 @@ import pl.aogiri.ims.product.presentation.dto.ProductDetailsResponse;
 import pl.aogiri.ims.product.presentation.dto.ProductFilterCriteria;
 import pl.aogiri.ims.product.presentation.dto.ProductUpsertRequest;
 
-import java.util.List;
-
 @Service
 @Transactional
 public class ProductService extends BaseCrudService<ProductEntity, ProductUpsertRequest, ProductDetailsResponse, ProductBasicResponse, ProductFilterCriteria> {

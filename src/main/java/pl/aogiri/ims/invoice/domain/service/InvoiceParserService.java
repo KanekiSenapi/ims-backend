@@ -6,8 +6,6 @@ import pl.aogiri.ims.file.domain.value.File;
 import pl.aogiri.ims.file.presentation.dto.FileUploadRequest;
 import pl.aogiri.ims.invoice.presentation.dto.invoice.InvoiceUpsertRequest;
 
-import java.net.URI;
-
 @RequiredArgsConstructor
 @Service
 public class InvoiceParserService  {
