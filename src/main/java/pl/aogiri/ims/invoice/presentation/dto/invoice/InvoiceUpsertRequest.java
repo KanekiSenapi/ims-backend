@@ -16,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class InvoiceUpsertRequest {
 
-    private URI file;
+    private String file;
     private InvoiceType invoiceType;
     private String invoiceNumber;
     private LocalDate invoiceDate;

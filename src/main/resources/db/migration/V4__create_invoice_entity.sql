@@ -25,7 +25,7 @@ CREATE TABLE invoices
     seller_id       UUID         NOT NULL,
     buyer_id        UUID         NOT NULL,
     additional_info VARCHAR(1024),
-    file            VARCHAR(1024),
+    file            TEXT,
     CONSTRAINT pk_invoices PRIMARY KEY (id)
 );
 
@@ -40,6 +40,18 @@ CREATE TABLE invoices_items
     invoice_entity_id UUID NOT NULL,
     items_id          UUID NOT NULL
 );
+
+CREATE TABLE confirmations
+(
+    id         UUID         NOT NULL,
+    type       VARCHAR(255) NOT NULL,
+    invoice_id UUID,
+    file       TEXT,
+    CONSTRAINT pk_confirmations PRIMARY KEY (id)
+);
+
+ALTER TABLE confirmations
+    ADD CONSTRAINT FK_CONFIRMATIONS_ON_INVOICE FOREIGN KEY (invoice_id) REFERENCES invoices (id);
 
 ALTER TABLE invoices_confirmations
     ADD CONSTRAINT uc_invoices_confirmations_confirmations UNIQUE (confirmations_id);

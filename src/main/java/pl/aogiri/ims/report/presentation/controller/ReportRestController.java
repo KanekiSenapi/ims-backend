@@ -15,7 +15,7 @@ public class ReportRestController implements ReportController {
     private final ReportService reportService;
 
     @Override
-    public Report sendReport(int year, int month) throws MessagingException {
-        return reportService.report(year, Month.of(month));
+    public void sendReport(int year, int month) throws MessagingException {
+        reportService.report(year, Month.of(month));
     }
 }

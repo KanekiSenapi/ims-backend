@@ -11,11 +11,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pl.aogiri.ims.common.provider.GCSProvider;
+import pl.aogiri.ims.confirmation.domain.converter.ConfirmationConverter;
+import pl.aogiri.ims.confirmation.domain.entity.ConfirmationEntity;
 import pl.aogiri.ims.confirmation.domain.service.ConfirmationService;
 import pl.aogiri.ims.confirmation.presentation.dto.ConfirmationUpsertRequest;
 import pl.aogiri.ims.file.domain.value.File;
 import pl.aogiri.ims.file.domain.value.FileType;
 import pl.aogiri.ims.file.presentation.dto.FileUploadRequest;
+import pl.aogiri.ims.invoice.domain.entity.InvoiceEntity;
+import pl.aogiri.ims.invoice.domain.repository.InvoiceRepository;
 import pl.aogiri.ims.invoice.domain.service.InvoiceParserService;
 
 import java.io.IOException;
@@ -31,7 +35,9 @@ public class FileService {
 
     private final GCSProvider gcsProvider;
     private final InvoiceParserService invoiceService;
+    private final InvoiceRepository invoiceRepository;
     private final ConfirmationService confirmationService;
+    private final ConfirmationConverter confirmationConverter;
 
     public File pullFileFromGCS(URI uri, FileType fileType) {
         Storage storage = gcsProvider.get();
@@ -55,7 +61,10 @@ public class FileService {
         FileType fileType = request.getFileType();
         File invoiceFile = pushFileIntoGCS(file, fileType);
         URI uri = invoiceFile.getFileUri();
-        confirmationService.create(new ConfirmationUpsertRequest(request.getInvoiceId(), uri, fileType));
+        InvoiceEntity invoiceEntity = invoiceRepository.findById(request.getInvoiceId()).orElseThrow();
+        ConfirmationEntity entity = confirmationConverter.toEntity(new ConfirmationUpsertRequest(request.getInvoiceId(), uri, fileType));
+        invoiceEntity.getConfirmations().add(entity);
+        invoiceRepository.save(invoiceEntity);
     }
 
     private void handleNewInvoice(MultipartFile file, FileUploadRequest request) throws IOException {
@@ -66,7 +75,7 @@ public class FileService {
     public File pushFileIntoGCS(MultipartFile file, FileType fileType) throws IOException {
         Storage storage = gcsProvider.get();
 
-        String filename = file.getOriginalFilename();
+        String filename = StringUtils.replace(file.getOriginalFilename()," ", "_");
         String extension = FilenameUtils.getExtension(filename);
 
         String gcpFilename = String.format("%s.%s", filename,  UUID.randomUUID());

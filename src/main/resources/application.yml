@@ -5,8 +5,10 @@ spring:
     host: localhost
     port: 1025
     test-connection: true
-  jpa:
-    show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
 
 server:
   port: 8080

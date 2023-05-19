@@ -38,7 +38,7 @@ public class ReportService {
         LocalDate to = yearMonth.atEndOfMonth();
         InvoiceFilterCriteria invoiceFilterCriteria = new InvoiceFilterCriteria();
         invoiceFilterCriteria.setFrom(from);
-        invoiceFilterCriteria.setFrom(to);
+        invoiceFilterCriteria.setTo(to);
 
         List<InvoiceEntity> invoicesInGivenMonth = invoiceService.findRaw(invoiceFilterCriteria);
         List<InvoiceWithFile> invoiceWithFileStream = invoicesInGivenMonth.stream().map(invoice -> {
@@ -57,10 +57,12 @@ public class ReportService {
         Report report = reportConverter.of(yearMonth, invoiceWithFileStream);
 
         emailService.sendReport(report);
+
+
         return report;
     }
 
-    private FileType mapToFileType(ConfirmationType fileType) {
+    public static FileType mapToFileType(ConfirmationType fileType) {
         return switch (fileType) {
             case TRANSFER -> FileType.CONFIRMATION_TRANSFER;
             case TRANSPORT -> FileType.CONFIRMATION_TRANSPORT;

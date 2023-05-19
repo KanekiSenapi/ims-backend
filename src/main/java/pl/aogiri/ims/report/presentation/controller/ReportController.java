@@ -12,6 +12,6 @@ import pl.aogiri.ims.report.domain.value.Report;
 public interface ReportController {
 
     @PostMapping(value = "/send")
-    Report sendReport(@RequestParam int year, @RequestParam int month) throws MessagingException;
+    void sendReport(@RequestParam int year, @RequestParam int month) throws MessagingException;
 
 }

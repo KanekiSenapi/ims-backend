@@ -13,18 +13,30 @@ import pl.aogiri.ims.invoice.presentation.dto.invoice.InvoiceBasicResponse;
 import pl.aogiri.ims.invoice.presentation.dto.invoice.InvoiceDetailsResponse;
 import pl.aogiri.ims.invoice.presentation.dto.invoice.InvoiceUpsertRequest;
 
+import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional
 public class InvoiceService extends BaseCrudService<InvoiceEntity, InvoiceUpsertRequest, InvoiceDetailsResponse, InvoiceBasicResponse, InvoiceFilterCriteria> {
 
-    public InvoiceService(InvoiceRepository repository, InvoiceConverter converter, InvoiceSpecifications specifications) {
+    private final InvoiceRepository invoiceRepository;
+
+    public InvoiceService(InvoiceRepository repository, InvoiceConverter converter, InvoiceSpecifications specifications,
+                          InvoiceRepository invoiceRepository) {
         super(repository, converter, specifications);
+        this.invoiceRepository = invoiceRepository;
     }
 
     public List<InvoiceEntity> findRaw(InvoiceFilterCriteria filterCriteria) {
         Specification<InvoiceEntity> specification = specifications.filterByCriteria(filterCriteria);
         return repository.findAll(specification);
+    }
+
+    public void update(UUID invoiceId, String uri) {
+        InvoiceEntity invoiceEntity = invoiceRepository.findById(invoiceId).orElseThrow();
+        invoiceEntity.setFile(URI.create(uri));
+        invoiceRepository.save(invoiceEntity);
     }
 }

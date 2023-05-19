@@ -2,6 +2,7 @@ package pl.aogiri.ims.common.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.transaction.annotation.Transactional;
 import pl.aogiri.ims.common.converter.BaseConverter;
 import pl.aogiri.ims.common.repository.BaseCrudRepository;
 import pl.aogiri.ims.common.repository.BaseSpecifications;
@@ -48,6 +49,7 @@ public abstract class BaseCrudService<Entity, UpsertRequest, DetailsResponse, Ba
         return converter.toDetailsResponse(savedEntity);
     }
 
+    @Transactional
     public DetailsResponse update(final UUID id, final UpsertRequest dto) {
         Entity entity = converter.toEntity(dto, id);
         Entity savedEntity = repository.save(entity);

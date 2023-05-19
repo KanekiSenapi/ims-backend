@@ -25,7 +25,6 @@ public class EmailService {
         String text = ReportUtils.reportText(report);
         Map<String, Blob> files = ReportUtils.reportFiles(report);
 
-
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 

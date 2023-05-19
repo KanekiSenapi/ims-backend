@@ -27,9 +27,9 @@ public class ConfirmationEntity {
     private ConfirmationType type;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
     private InvoiceEntity invoice;
 
+    @Column(columnDefinition = "text")
     private String file;
 
     public URI getFile() {

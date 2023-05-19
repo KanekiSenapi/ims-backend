@@ -46,6 +46,7 @@ public interface BaseCrudController<UpsertRequest, DetailsResponse, BasicRespons
     DetailsResponse getById(@PathVariable @Parameter(description = "Resource ID") final UUID id);
 
     @GetMapping(
+            consumes = {MediaType.ALL_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     @Operation(
@@ -72,7 +73,7 @@ public interface BaseCrudController<UpsertRequest, DetailsResponse, BasicRespons
 
     @DeleteMapping(
             path = "{id}",
-            consumes = {MediaType.APPLICATION_JSON_VALUE}
+            consumes = {MediaType.ALL_VALUE}
     )
     @Operation(
             summary = "Delete a resource by ID",

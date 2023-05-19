@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.aogiri.ims.customer.presentation.dto.CustomerDetailsResponse;
+import pl.aogiri.ims.file.presentation.dto.FileBasicResponse;
+import pl.aogiri.ims.invoice.domain.entity.InvoiceType;
 import pl.aogiri.ims.invoice.presentation.dto.invoiceitem.InvoiceItemDetailsResponse;
 
 import java.time.LocalDate;
@@ -18,6 +20,7 @@ import java.util.UUID;
 public class InvoiceDetailsResponse {
     private UUID id;
     private String invoiceNumber;
+    private InvoiceType invoiceType;
     private LocalDate invoiceDate;
     private LocalDate saleDate;
     private String issuePlace;
@@ -25,4 +28,5 @@ public class InvoiceDetailsResponse {
     private CustomerDetailsResponse seller;
     private CustomerDetailsResponse buyer;
     private List<InvoiceItemDetailsResponse> items;
+    private List<FileBasicResponse> files;
 }

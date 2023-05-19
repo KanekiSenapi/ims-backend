@@ -6,10 +6,12 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.hibernate.Hibernate;
 import pl.aogiri.ims.confirmation.domain.entity.ConfirmationEntity;
 import pl.aogiri.ims.customer.domain.entity.CustomerEntity;
+import pl.aogiri.ims.file.domain.value.File;
 
 import java.math.BigDecimal;
 import java.net.URI;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -67,6 +69,7 @@ public class InvoiceEntity {
     @ToString.Exclude
     private List<ConfirmationEntity> confirmations;
 
+    @Column(columnDefinition = "text")
     private String file;
 
 
@@ -96,10 +99,10 @@ public class InvoiceEntity {
     }
 
     public URI getFile() {
-        return URI.create(file);
+        return file == null ? null : URI.create(file);
     }
 
     public void setFile(URI uri) {
-        this.file = uri.toString();
+        this.file = uri == null ? null : uri.toString();
     }
 }
